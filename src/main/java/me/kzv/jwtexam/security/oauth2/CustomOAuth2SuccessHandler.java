@@ -46,6 +46,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         response.addCookie(accessCookie);
         response.addCookie(refreshCookie);
 
+        System.out.println("success handler----------------finish");
 //        final String token = null;
 //        final String targetUrl = UriComponentsBuilder.fromUriString(redirectUrl).queryParam("token", token).build().toString();
         final String targetUrl = "http://localhost:8080";

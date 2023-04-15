@@ -39,7 +39,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/private").authenticated();
+                    auth.requestMatchers("/private", "/get-account").authenticated();
                     auth.anyRequest().permitAll();
                 })
 
