@@ -38,6 +38,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(account.getAuthority().toString());
 
+        // custom return 을 해야함
         return new DefaultOAuth2User(Collections.singleton(grantedAuthority),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
