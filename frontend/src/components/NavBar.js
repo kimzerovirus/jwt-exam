@@ -27,6 +27,11 @@ function NavBar() {
               private
             </NavLink>
           </Button>
+          <Button color="inherit">
+            <NavLink to="/login" style={navLinkStyles}>
+              login
+            </NavLink>
+          </Button>
         </Stack>
       </Toolbar>
     </AppBar>

@@ -1,4 +1,4 @@
-package me.kzv.jwtexam.security.oauth2;
+package me.kzv.jwtexam.security.handler;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -18,13 +18,13 @@ import java.io.IOException;
 
 @Log4j2
 @Component
-public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtTokenProvider tokenProvider;
     private final String redirectUrl;
     private final CookieUtils cookieUtils;
 
-    public CustomOAuth2SuccessHandler(JwtTokenProvider tokenProvider, @Value("${oauth2.authorized-redirect-url}") String redirectUrl, CookieUtils cookieUtils) {
+    public CustomLoginSuccessHandler(JwtTokenProvider tokenProvider, @Value("${oauth2.authorized-redirect-url}") String redirectUrl, CookieUtils cookieUtils) {
         this.tokenProvider = tokenProvider;
         this.redirectUrl = redirectUrl;
         this.cookieUtils = cookieUtils;
@@ -51,6 +51,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //        final String targetUrl = UriComponentsBuilder.fromUriString(redirectUrl).queryParam("token", token).build().toString();
         final String targetUrl = "http://localhost:8080";
 
+        log.info("=== login success ===");
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }

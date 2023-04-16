@@ -20,8 +20,8 @@ public class CustomUserPrincipal implements UserDetails, OAuth2User {
     private Map<String, Object> attributes;
 
     // 일반 로그인
-    public static CustomUserPrincipal of(Account member) {
-        return CustomUserPrincipal.of(member, Map.of());
+    public static CustomUserPrincipal of(Account account) {
+        return CustomUserPrincipal.of(account, Map.of());
     }
 
     // oauth2 로그인
@@ -30,9 +30,22 @@ public class CustomUserPrincipal implements UserDetails, OAuth2User {
     }
 
     @Override
+    public String toString() {
+        return "CustomUserPrincipal{" +
+                "id=" + account.getId() +
+                ", email='" + account.getEmail() +
+                ", nickname='" + account.getNickname() +
+                ", password='" + account.getPassword() +
+                ", profileImage='" + account.getProfileImage() + '\'' +
+                ", socialType=" + account.getSocialType() +
+                ", authority=" + account.getAuthority() +
+                "}";
+    }
+
+    @Override
     public String getName() {
-        // Account 의 PK 반환
-        return account.getId().toString();
+        // SecurityContextHolder.getContext().getAuthentication().getName() 이 인증을 진행한 username 을 반환하므로 이에 맞춰서 email 을 반환해줬음
+        return account.getEmail();
     }
 
     @Override

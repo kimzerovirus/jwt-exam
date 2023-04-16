@@ -1,4 +1,4 @@
-package me.kzv.jwtexam.security.oauth2;
+package me.kzv.jwtexam.security.handler;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -10,10 +10,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class CustomOAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        getRedirectStrategy().sendRedirect(request,response,"http://localhost:8080/index");
+        getRedirectStrategy().sendRedirect(request,response,"http://localhost:8080/");
     }
 }

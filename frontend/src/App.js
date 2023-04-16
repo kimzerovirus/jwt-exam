@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import PublicPage from "./pages/PublicPage";
 import PrivatePage from "./pages/PrivatePage";
 import AuthProvider, { Authentication} from "./security/AuthProvider";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<PublicPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="private" element={
             <Authentication>
               <PrivatePage />

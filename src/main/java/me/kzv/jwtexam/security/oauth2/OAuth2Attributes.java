@@ -34,11 +34,10 @@ public class OAuth2Attributes {
     }
 
     public static OAuth2Attributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
-        return switch (registrationId) {
-            case "google" -> ofGoogle(userNameAttributeName, attributes);
-            case "naver" -> ofNaver("id", attributes);
-            case "kakao" -> ofKakao("id", attributes);
-            default -> throw new RuntimeException("OAuth2 Login Failed");
+        return switch (SocialType.findByRegistrationId(registrationId)) {
+            case GOOGLE -> ofGoogle(userNameAttributeName, attributes);
+            case NAVER -> ofNaver("id", attributes);
+            case KAKAO -> ofKakao("id", attributes);
         };
     }
 

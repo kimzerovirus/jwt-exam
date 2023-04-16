@@ -4,13 +4,13 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import me.kzv.jwtexam.security.CustomUserPrincipal;
+import me.kzv.jwtexam.security.auth.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,9 +34,11 @@ public class JwtTokenProvider {
     private static final Date accessTokenExpiresIn = Date.from(Instant.now().plus(ACCESS_TOKEN_EXPIRE_MINUTES, ChronoUnit.MINUTES));
     private static final Date refreshTokenExpiresIn = Date.from(Instant.now().plus(REFRESH_TOKEN_EXPIRE_DAYS, ChronoUnit.DAYS));
 
+    private final CustomUserDetailsService userDetailsService;
     private final Key SECRET_KEY;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String key) {
+    public JwtTokenProvider(CustomUserDetailsService userDetailsService, @Value("${jwt.secret}") String key) {
+        this.userDetailsService = userDetailsService;
         this.SECRET_KEY = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
     }
 
@@ -97,7 +99,7 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        CustomUserPrincipal principal = userDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
