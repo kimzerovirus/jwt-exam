@@ -2,7 +2,7 @@ package me.kzv.jwtexam.security;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import me.kzv.jwtexam.domain.Account;
+import me.kzv.jwtexam.account.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

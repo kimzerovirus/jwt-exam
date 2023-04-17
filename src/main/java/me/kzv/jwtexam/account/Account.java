@@ -1,10 +1,12 @@
-package me.kzv.jwtexam.domain;
+package me.kzv.jwtexam.account;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.kzv.jwtexam.account.enums.AuthorityType;
+import me.kzv.jwtexam.account.enums.SocialType;
 
 @Builder
 @Getter

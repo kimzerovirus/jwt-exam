@@ -1,24 +1,19 @@
 package me.kzv.jwtexam.config;
 
 import lombok.RequiredArgsConstructor;
-import me.kzv.jwtexam.security.auth.CustomAuthenticationProvider;
-import me.kzv.jwtexam.security.auth.CustomUserDetailsService;
+import me.kzv.jwtexam.security.handler.CustomLoginFailureHandler;
+import me.kzv.jwtexam.security.handler.CustomLoginSuccessHandler;
 import me.kzv.jwtexam.security.jwt.JwtAccessDeniedHandler;
 import me.kzv.jwtexam.security.jwt.JwtAuthenticationEntryPoint;
 import me.kzv.jwtexam.security.jwt.JwtAuthenticationFilter;
-import me.kzv.jwtexam.security.handler.CustomLoginFailureHandler;
-import me.kzv.jwtexam.security.handler.CustomLoginSuccessHandler;
 import me.kzv.jwtexam.security.oauth2.CustomOAuth2UserService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -27,8 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    private final CustomUserDetailsService customUserDetailsService;
-    private final CustomAuthenticationProvider customAuthenticationProvider;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomLoginSuccessHandler customLoginSuccessHandler;
     private final CustomLoginFailureHandler customLoginFailureHandler;
@@ -52,16 +45,7 @@ public class SecurityConfig {
                     auth.anyRequest().permitAll();
                 })
 
-                .formLogin()
-                .loginProcessingUrl("/api/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .successHandler(customLoginSuccessHandler)
-                .permitAll()
-
-                .and()
-                .userDetailsService(customUserDetailsService)
-                .authenticationProvider(customAuthenticationProvider)
+                .formLogin().disable()
 
                 .oauth2Login(
                         oauth -> {

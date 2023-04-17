@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.kzv.jwtexam.domain.Account;
-import me.kzv.jwtexam.domain.AuthorityType;
-import me.kzv.jwtexam.domain.SocialType;
+import me.kzv.jwtexam.account.Account;
+import me.kzv.jwtexam.account.enums.AuthorityType;
+import me.kzv.jwtexam.account.enums.SocialType;
 
 import java.util.Map;
 

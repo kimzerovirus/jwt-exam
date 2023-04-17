@@ -4,8 +4,8 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import me.kzv.jwtexam.account.AccountService;
 import me.kzv.jwtexam.security.CustomUserPrincipal;
-import me.kzv.jwtexam.security.auth.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,11 +34,11 @@ public class JwtTokenProvider {
     private static final Date accessTokenExpiresIn = Date.from(Instant.now().plus(ACCESS_TOKEN_EXPIRE_MINUTES, ChronoUnit.MINUTES));
     private static final Date refreshTokenExpiresIn = Date.from(Instant.now().plus(REFRESH_TOKEN_EXPIRE_DAYS, ChronoUnit.DAYS));
 
-    private final CustomUserDetailsService userDetailsService;
+    private final AccountService accountService;
     private final Key SECRET_KEY;
 
-    public JwtTokenProvider(CustomUserDetailsService userDetailsService, @Value("${jwt.secret}") String key) {
-        this.userDetailsService = userDetailsService;
+    public JwtTokenProvider(AccountService accountService, @Value("${jwt.secret}") String key) {
+        this.accountService = accountService;
         this.SECRET_KEY = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
     }
 
@@ -85,8 +85,8 @@ public class JwtTokenProvider {
     }
 
 
-    public Authentication getAuthentication(String accessToken) {
-        Claims claims = parseClaims(accessToken);
+    public Authentication getAuthentication(String token) {
+        Claims claims = parseClaims(token);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
@@ -99,11 +99,11 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        CustomUserPrincipal principal = userDetailsService.loadUserByUsername(claims.getSubject());
+        CustomUserPrincipal principal = accountService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    public boolean validateToken(String token) {
+    public boolean isValid(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token);
             return true;

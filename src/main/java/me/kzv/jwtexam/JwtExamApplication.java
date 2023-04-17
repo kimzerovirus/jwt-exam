@@ -1,9 +1,9 @@
 package me.kzv.jwtexam;
 
 import lombok.RequiredArgsConstructor;
-import me.kzv.jwtexam.domain.Account;
-import me.kzv.jwtexam.domain.AccountRepository;
-import me.kzv.jwtexam.domain.AuthorityType;
+import me.kzv.jwtexam.account.Account;
+import me.kzv.jwtexam.account.AccountRepository;
+import me.kzv.jwtexam.account.enums.AuthorityType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

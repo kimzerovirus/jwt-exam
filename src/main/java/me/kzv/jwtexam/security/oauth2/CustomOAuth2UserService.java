@@ -2,8 +2,8 @@ package me.kzv.jwtexam.security.oauth2;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import me.kzv.jwtexam.domain.Account;
-import me.kzv.jwtexam.domain.AccountRepository;
+import me.kzv.jwtexam.account.Account;
+import me.kzv.jwtexam.account.AccountRepository;
 import me.kzv.jwtexam.security.CustomUserPrincipal;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

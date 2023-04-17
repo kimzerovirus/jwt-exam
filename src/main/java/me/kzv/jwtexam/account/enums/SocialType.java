@@ -1,4 +1,4 @@
-package me.kzv.jwtexam.domain;
+package me.kzv.jwtexam.account.enums;
 
 import java.util.Arrays;
 
